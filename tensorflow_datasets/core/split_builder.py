@@ -29,7 +29,7 @@ from tensorflow_datasets.core import file_adapters
 from tensorflow_datasets.core import lazy_imports_lib
 from tensorflow_datasets.core import naming
 from tensorflow_datasets.core import splits as splits_lib
-from tensorflow_datasets.core import tfrecords_writer
+from tensorflow_datasets.core import writer as writer_lib
 from tensorflow_datasets.core import utils
 
 if typing.TYPE_CHECKING:
@@ -340,7 +340,7 @@ class SplitBuilder:
       else:
         total_num_examples = None
 
-    writer = tfrecords_writer.Writer(
+    writer = writer_lib.Writer(
         example_specs=self._features.get_serialized_info(),
         filename_template=filename_template,
         hash_salt=split_name,
@@ -381,7 +381,7 @@ class SplitBuilder:
     # TODO(tfds): Should try to add support to `max_examples_per_split`
     beam = lazy_imports_lib.lazy_imports.apache_beam
 
-    beam_writer = tfrecords_writer.BeamWriter(
+    beam_writer = writer_lib.BeamWriter(
         example_specs=self._features.get_serialized_info(),
         filename_template=filename_template,
         hash_salt=split_name,
